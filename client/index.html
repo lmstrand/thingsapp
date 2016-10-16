@@ -1,0 +1,125 @@
+<html ng-app="thingsApp">
+<head>
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  	
+  <script src="/js/jquery.min.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
+  <script src="/js/angular.min.js"></script>
+  <script src="/js/app.js"></script>
+
+  
+    <style>
+      #map {
+        margin-bottom:5px;
+        margin-left:5px;
+        width: 98%;
+        height: 50%;
+      }
+    </style>
+
+    <style>
+      #MainWrap {
+        margin-bottom:5px;
+        margin-left:5px;
+        margin-right:5px;
+        
+      }
+    </style>
+      
+</head>
+<body id="MainWrap" ng-controller="ThingListController">
+
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h1>{{title}}</span></h1>
+
+    </div>
+    <div>
+       <p>{{message}}</p>
+       <p>{{timeInS}}<p>
+    </div>
+
+    <p id="clock"></p>
+
+      <script>
+      var myVar = setInterval(myTimer, 1000);
+
+    function myTimer() {
+    var d = new Date();
+    document.getElementById("clock").innerHTML = d.toLocaleTimeString();
+    }
+</script>
+   
+    
+ <form action="javascript:void(0)">
+    <p>Name: <input type="text"  name="newname" ng-model="formData.name" /><br />
+    <p>Type:  <input type="text" name="newtype" ng-model="formData.type" /><br />
+    <p>Latitude:  <input type="text" name="newlatitude" ng-model="formData.latitude" /><br />
+    <p>Longitude: <input type="text" name="newlongitude" ng-model="formData.longitude" /><br />
+    <p>Active: <input type="text" name="newactive" ng-model="formData.active"  /><br />
+    <p>Battery (0-100%): <input type="text" name="newbattery" ng-model="formData.battery"  /><br />
+    <button ng-click="SendData(formData)">Register new Thing</button>
+    </form>
+    {{PostDataResponse}}
+    <hr />
+
+
+
+    
+</div>
+
+
+  
+</form>
+
+    <div class="panel-body">
+
+      <ul>
+        <li ng-repeat="x in things">
+          <span>{{x.name}}</span>
+          <p>latitude: {{x.latitude}}, longitude: {{x.longitude}}</p>
+          
+          <p>type: {{x.type}}</p>
+          <p>active: {{x.active}}</p>
+          
+
+          <button ng-click="activate(x)" type="button" class="btn btn-success">Activate</button>
+          <button ng-click="deactivate(x)" type="button" class="btn btn-danger">Deactivate</button>  
+          
+          <button ng-click="delete(x)">Delete</button>
+
+          <p></p>
+          <p>Battery:</p>
+             <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="70"
+            aria-valuemin="0" aria-valuemax="100" style="width:{{x.battery}}">
+            {{x.battery}}
+          </div>
+          </div>
+
+          <hr>
+  
+</div>
+
+          
+          
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  
+  <div id="map"></div>
+  
+  
+  <div>
+
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBzFGwecORUEOXfMshUaXuZ-MVzsuSFPrQ&callback=initMap"
+    async defer></script>
+    </div>
+
+</body>
+
+</html>
